@@ -1,5 +1,13 @@
 import PropTypes from 'prop-types';
-import { MovieWrapper, Image, InfoWrapper } from './MovieInfo.styled';
+import {
+  MovieWrapper,
+  Image,
+  InfoWrapper,
+  MovieName,
+  MovieScore,
+  TextTitle,
+  Text,
+} from './MovieInfo.styled';
 
 export const MovieInfo = ({ dataMovie }) => {
   const { title, release_date, vote_average, overview, genres, poster_path } =
@@ -11,16 +19,16 @@ export const MovieInfo = ({ dataMovie }) => {
         alt={title}
       />
       <InfoWrapper>
-        <h2>{`${title} (${release_date.slice(0, 4)})`}</h2>
-        <p>User Score: {Math.round(vote_average * 10)}%</p>
-        <h3>Overwiev</h3>
-        <p>{overview}</p>
-        <h3>Genres</h3>
-        <p>
+        <MovieName>{`${title} (${release_date.slice(0, 4)})`}</MovieName>
+        <MovieScore>User Score: {Math.round(vote_average * 10)}%</MovieScore>
+        <TextTitle>Overwiev</TextTitle>
+        <Text>{overview}</Text>
+        <TextTitle>Genres</TextTitle>
+        <Text>
           {genres.length > 0
             ? genres.map(({ name }) => name).join(', ')
             : 'No genres!'}
-        </p>
+        </Text>
       </InfoWrapper>
     </MovieWrapper>
   );

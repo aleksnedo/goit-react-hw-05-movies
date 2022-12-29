@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useParams, Outlet, useLocation } from 'react-router-dom';
 import { getMovieById } from 'services/movieAPI';
 import { MovieInfo } from 'components/MovieInfo/MovieInfo';
 import { BackLink } from 'components/BackLink/BackLink';
+import { SectionTitle, List, Item, LinkStyle } from './MovieDetails.styled';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [dataMovie, setDataMovie] = useState(null);
 
   const { movieId } = useParams();
@@ -21,7 +22,24 @@ export const MovieDetails = () => {
     <main>
       <BackLink to={BackLinkHref}>Go back</BackLink>
       {dataMovie && <MovieInfo dataMovie={dataMovie} />}
-      <Outlet />
+      <Suspense fallback={<div>Information is Loading...</div>}>
+        <SectionTitle>Additional information</SectionTitle>
+        <List>
+          <Item>
+            <LinkStyle to="cast" state={{ from: BackLinkHref }}>
+              Cast
+            </LinkStyle>
+          </Item>
+          <Item>
+            <LinkStyle to="reviews" state={{ from: BackLinkHref }}>
+              Reviews
+            </LinkStyle>
+          </Item>
+        </List>
+        <Outlet />
+      </Suspense>
     </main>
   );
 };
+
+export default MovieDetails;

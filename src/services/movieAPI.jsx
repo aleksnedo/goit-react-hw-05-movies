@@ -13,10 +13,12 @@ export async function getMoviesTrending() {
 
 export async function getMoviesByQuery({ query, page }) {
   try {
-    const response = await axios.get(
+    const {
+      data: { results },
+    } = await axios.get(
       `https://api.themoviedb.org/3/search/movie?api_key=63f559983b2c566f4ead7a47a8a9015b&language=en-US&query=${query}&page=${page}&include_adult=false`
     );
-    return response.data.results;
+    return results.map(({ id, title }) => ({ id, title }));
   } catch (error) {
     console.error(error);
   }
@@ -44,10 +46,15 @@ export async function getMovieById(movieId) {
 
 export async function getMovieCast(movieId) {
   try {
-    const response = await axios.get(
+    const { data } = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=63f559983b2c566f4ead7a47a8a9015b&language=en-US`
     );
-    return response;
+    return data.cast.map(({ name, profile_path, character, cast_id }) => ({
+      name,
+      profile_path,
+      character,
+      cast_id,
+    }));
   } catch (error) {
     console.error(error);
   }
@@ -55,10 +62,14 @@ export async function getMovieCast(movieId) {
 
 export async function getMovieReviews(movieId) {
   try {
-    const resposne = axios.get(
+    const { data } = await axios.get(
       `https://api.themoviedb.org/3/movie/${movieId}/reviews?api_key=63f559983b2c566f4ead7a47a8a9015b&language=en-US&page=1`
     );
-    return resposne;
+    return data.results.map(({ author, content, id }) => ({
+      author,
+      content,
+      id,
+    }));
   } catch (error) {
     console.error(error);
   }
