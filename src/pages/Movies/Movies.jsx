@@ -4,6 +4,7 @@ import { Searchbox } from 'components/Searchbox/Searchbox';
 import { useEffect } from 'react';
 import { getMoviesByQuery } from 'services/movieAPI';
 import { MoviesList } from 'components/MoviesList/MoviesList';
+import { Title } from './Movies.styled';
 
 const Movies = () => {
   const [queryInput, setQueryInput] = useState('');
@@ -36,7 +37,7 @@ const Movies = () => {
 
   return (
     <main>
-      <h1>Movies Search Page</h1>
+      <Title>Movies Search</Title>
       <Searchbox
         onClick={handleButtonClick}
         value={queryInput}

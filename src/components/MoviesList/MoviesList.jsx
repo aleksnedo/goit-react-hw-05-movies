@@ -9,10 +9,7 @@ export const MoviesList = ({ movies }) => {
       {movies.map(movie => (
         <li key={movie.id}>
           <MovieLink to={`/movies/${movie.id}`} state={{ from: location }}>
-            <MovieName>{`${movie.title} (${movie.release_date.slice(
-              0,
-              4
-            )})`}</MovieName>
+            <MovieName>{`${movie.title} (${movie.release_date})`}</MovieName>
           </MovieLink>
         </li>
       ))}
@@ -25,6 +22,7 @@ MoviesList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
+      release_date: PropTypes.string,
     })
   ),
 };
