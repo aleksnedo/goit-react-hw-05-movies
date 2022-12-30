@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { getMoviesByQuery } from 'services/movieAPI';
 import { MoviesList } from 'components/MoviesList/MoviesList';
 import { Title } from './Movies.styled';
+import { ToastContainer, toast, Flip } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Movies = () => {
   const [queryInput, setQueryInput] = useState('');
@@ -23,7 +25,7 @@ const Movies = () => {
 
   const handleButtonClick = () => {
     if (queryInput === '') {
-      return alert('Sorry, nothing was found for your search');
+      return toast.warn('Please enter the name of the movie');
     }
 
     updateQueryString(queryInput);
@@ -43,6 +45,7 @@ const Movies = () => {
         value={queryInput}
         onChange={setQueryInput}
       />
+      <ToastContainer autoClose={2500} theme="dark" transition={Flip} />
       {movies.length > 0 ? (
         <MoviesList movies={movies} />
       ) : (

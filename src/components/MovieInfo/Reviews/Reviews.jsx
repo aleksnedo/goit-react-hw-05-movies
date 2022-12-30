@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getMovieReviews } from 'services/movieAPI';
+import { TitleSection, Item, AuthorName, Text } from './Reviews.styled';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState('');
@@ -11,10 +12,10 @@ const Reviews = () => {
     getMovieReviews(movieId).then(data => {
       setReviews(
         data.map(elem => (
-          <li key={elem.id}>
-            <h3>Author: {elem.author}</h3>
-            <p>{elem.content}</p>
-          </li>
+          <Item key={elem.id}>
+            <AuthorName>Author: {elem.author}</AuthorName>
+            <Text>{elem.content}</Text>
+          </Item>
         ))
       );
       setReviewsLength(data.length);
@@ -22,10 +23,10 @@ const Reviews = () => {
   }, [movieId]);
 
   return (
-    <div>
-      <h2>Reviews</h2>
+    <>
+      <TitleSection>Reviews</TitleSection>
       <ul>{reviewsLength !== 0 ? reviews : 'No reviews'}</ul>
-    </div>
+    </>
   );
 };
 

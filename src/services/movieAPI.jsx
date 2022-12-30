@@ -18,7 +18,11 @@ export async function getMoviesByQuery({ query, page }) {
     } = await axios.get(
       `https://api.themoviedb.org/3/search/movie?api_key=63f559983b2c566f4ead7a47a8a9015b&language=en-US&query=${query}&page=${page}&include_adult=false`
     );
-    return results.map(({ id, title }) => ({ id, title }));
+    return results.map(({ id, title, release_date }) => ({
+      id,
+      title,
+      release_date,
+    }));
   } catch (error) {
     console.error(error);
   }

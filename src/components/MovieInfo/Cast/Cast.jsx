@@ -1,6 +1,14 @@
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { getMovieCast } from 'services/movieAPI';
+import {
+  TitleSection,
+  List,
+  Item,
+  NameActor,
+  Image,
+  NameWrapper,
+} from './Cast.styled';
 
 const Cast = () => {
   const [cast, setCast] = useState('');
@@ -10,29 +18,34 @@ const Cast = () => {
     getMovieCast(movieId).then(data => {
       setCast(
         data.map(elem => (
-          <li key={elem.cast_id}>
-            <img
+          <Item key={elem.cast_id}>
+            <Image
               src={`https://image.tmdb.org/t/p/w500${elem.profile_path}`}
               alt={elem.name}
-              width="150px"
+              width="230px"
               onError={e => {
                 e.target.src =
                   'https://media.istockphoto.com/id/1216251206/vector/no-image-available-icon.jpg?b=1&s=170667a&w=0&k=20&c=MiWLEcUdxZONMlnsN_k5OCaz_nLviJB0Hvcz5Wlp5oI=';
               }}
             />
-            <p>{elem.name}</p>
-            <p>Character: {elem.character}</p>
-          </li>
+            <NameWrapper>
+              <NameActor>{elem.name}</NameActor>
+              <p>
+                Character: <br />
+                {elem.character}
+              </p>
+            </NameWrapper>
+          </Item>
         ))
       );
     });
   }, [movieId]);
 
   return (
-    <div>
-      <h2>Cast</h2>
-      <ul>{cast}</ul>
-    </div>
+    <>
+      <TitleSection>Cast</TitleSection>
+      <List>{cast}</List>
+    </>
   );
 };
 
