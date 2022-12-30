@@ -6,10 +6,13 @@ import { TitleSection, Item, AuthorName, Text } from './Reviews.styled';
 const Reviews = () => {
   const [reviews, setReviews] = useState('');
   const [reviewsLength, setReviewsLength] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
   const { movieId } = useParams();
 
   useEffect(() => {
+    setIsLoading(true);
     getMovieReviews(movieId).then(data => {
+      setIsLoading(false);
       setReviews(
         data.map(elem => (
           <Item key={elem.id}>
@@ -25,7 +28,7 @@ const Reviews = () => {
   return (
     <>
       <TitleSection>Reviews</TitleSection>
-      <ul>{reviewsLength !== 0 ? reviews : 'No reviews'}</ul>
+      <ul>{reviewsLength !== 0 || isLoading ? reviews : 'No reviews'}</ul>
     </>
   );
 };
