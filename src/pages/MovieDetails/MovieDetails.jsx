@@ -21,21 +21,23 @@ const MovieDetails = () => {
   return (
     <main>
       <BackLink to={BackLinkHref}>Go back</BackLink>
+
       {dataMovie && <MovieInfo dataMovie={dataMovie} />}
+
+      <SectionTitle>Additional information</SectionTitle>
+      <List>
+        <Item>
+          <LinkStyle to="cast" state={{ from: BackLinkHref }}>
+            Cast
+          </LinkStyle>
+        </Item>
+        <Item>
+          <LinkStyle to="reviews" state={{ from: BackLinkHref }}>
+            Reviews
+          </LinkStyle>
+        </Item>
+      </List>
       <Suspense fallback={<div>Information is Loading...</div>}>
-        <SectionTitle>Additional information</SectionTitle>
-        <List>
-          <Item>
-            <LinkStyle to="cast" state={{ from: BackLinkHref }}>
-              Cast
-            </LinkStyle>
-          </Item>
-          <Item>
-            <LinkStyle to="reviews" state={{ from: BackLinkHref }}>
-              Reviews
-            </LinkStyle>
-          </Item>
-        </List>
         <Outlet />
       </Suspense>
     </main>
